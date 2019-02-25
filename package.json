@@ -1,0 +1,35 @@
+{
+  "name": "verthos-theme",
+  "version": "1.0.0",
+  "description": "_verthos theme",
+  "sasslintConfig": ".sass-lint.yml",
+  "main": "js/index.js",
+  "scripts": {
+    "sass": "sass --watch sass/style.scss:style.css",
+    "sass-build": "sass sass/style.scss:style.css --no-cache --style compressed",
+    "sass-build-dev": "sass sass/style.scss:style.css --no-cache",
+    "watch": "npm run sass",
+    "build": "npm run sass-build",
+    "test": "npm run sass-build-dev",
+    "start": "npm run build",
+    "lint": "sass-lint -v",
+    "lint:fix": "sass-lint-auto-fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@192.168.29.250:sites/verthos.git"
+  },
+  "keywords": [
+    "Wordpress",
+    "Theme"
+  ],
+  "author": "Viewup",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "sass-lint": "^1.12.1",
+    "sweetalert2": "^8.2.4"
+  },
+  "devDependencies": {
+    "sass-lint-auto-fix": "^0.15.2"
+  }
+}

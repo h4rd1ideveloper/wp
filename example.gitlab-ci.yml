@@ -1,0 +1,21 @@
+variables:
+  USER_FOLDER: 'verthos'
+deploy:
+  variables:
+    INSTALATION_PATH: '/var/www/sites/$USER_FOLDER/'
+    THEME_PATH: '/var/www/sites/$USER_FOLDER/wp-content/themes/$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME'
+    REPLACE_RE: 's/Theme Name:/Theme Name: ($CI_COMMIT_REF_NAME)/g'
+  script:
+    - echo "path   -> $THEME_PATH"
+    - echo "branch -> $CI_COMMIT_REF_NAME"
+    - echo "hash   -> $CI_COMMIT_SHA"
+    - rm -rf "$THEME_PATH" # Erase Old theme
+    - mkdir -p "$THEME_PATH" $ #Create Folder
+    - git --work-tree="$THEME_PATH" checkout -f "$CI_COMMIT_SHA" # Deploy theme
+    - echo "<?php die('Executando deploy...');" > "$INSTALATION_PATH/.maintenance"
+    - cd $THEME_PATH
+    - echo "RegExp -> $REPLACE_RE"
+    - npm run test || echo "Servidor não possui Node/Sass configurado"
+    - sed -i -e "$REPLACE_RE" ./style.css # Theme Rename
+    - sed -i -e "s/ (master)//g" ./style.css # Master Theme fix
+    - rm -rf "$INSTALATION_PATH/.maintenance"
